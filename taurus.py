@@ -4,6 +4,14 @@ from parser import parse
 from analyzer import analyze
 
 
+if len(sys.argv) < 2:
+    msg = '''Error: Missing data file
+
+Usage:
+    taurus.py file_name'''
+    print(msg)
+    sys.exit(1)
+
 file_name = sys.argv[1]
 with open(file_name) as data_file:
     data = data_file.read()
