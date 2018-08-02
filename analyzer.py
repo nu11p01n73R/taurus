@@ -1,6 +1,14 @@
+def get_operating_revenue(data):
+    return data['total_revenue'] - data['other_income']
+
+
+def get_operating_expense(data):
+    return data['total_expense'] - data['finance_cost'] - data['depreciation']
+
+
 def get_ebitda_margin(data):
-    operating_revenue = data['total_revenue'] - data['other_income']
-    operating_expense = data['total_expense'] - data['finance_cost']
+    operating_revenue = get_operating_revenue(data)
+    operating_expense = get_operating_expense(data)
     return ((operating_revenue - operating_expense)
             / operating_revenue * 100)
 
@@ -18,11 +26,27 @@ def get_roa(data):
             / data['total_assets'] * 100)
 
 
+def get_total_debt(data):
+    return data['short_term_debt'] + data['long_term_debt']
+
+
 def get_roce(data):
-    overall_capital = (data['total_equity'] +
-                       data['short_term_debt'] +
-                       data['long_term_debt'])
+    overall_capital = data['total_equity'] + get_total_debt(data)
     return data['pbt'] / overall_capital * 100
+
+
+def get_interest_coverage(data):
+    ebitda = get_operating_revenue(data) - get_operating_expense(data)
+    return ebitda / data['finance_cost']
+
+
+def get_debt_to_equity(data):
+    total_debt = get_total_debt(data)
+    return total_debt / data['total_equity']
+
+
+def get_debt_to_asset(data):
+    return get_total_debt(data) / data['total_assets'] * 100
 
 
 def analyze_per_year(data):
@@ -31,7 +55,10 @@ def analyze_per_year(data):
             'pat_margin': get_pat_margin,
             'roe': get_roe,
             'roa': get_roa,
-            'roce': get_roce}
+            'roce': get_roce,
+            'interest_coverage': get_interest_coverage,
+            'debt_to_equity': get_debt_to_equity,
+            'debt_to_asset': get_debt_to_asset}
 
     output = {}
     for key, method in method_map.items():
