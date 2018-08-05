@@ -26,8 +26,23 @@ class Stock:
     def print(self):
         pprint(self.ratio)
 
+    def toJson(self):
+        return self.__dict__
+
     def save(self):
         data = self.__dict__
         data['_id'] = self.id
 
         db[self.db_name][self.collection_name].save(data)
+
+    @classmethod
+    def find(cls, sid):
+        data = db[cls.db_name][cls.collection_name].find_one({'_id': sid})
+        if not data:
+            return None
+
+        stock = cls(data['id'], data['name'])
+        stock.set_data(data['data'])
+        stock.set_ratio(data['ratio'])
+
+        return stock
