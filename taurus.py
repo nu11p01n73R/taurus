@@ -1,22 +1,27 @@
 import sys
-from pprint import pprint
 from parser import parse
-from analyzer import analyze
+from stock import Stock
 
 
-if len(sys.argv) < 2:
+if len(sys.argv) != 4:
     msg = '''Error: Missing data file
 
 Usage:
-    taurus.py file_name'''
+    taurus.py stock_id stock_name file_name'''
     print(msg)
     sys.exit(1)
 
-file_name = sys.argv[1]
+sid = sys.argv[1]
+name = sys.argv[2]
+file_name = sys.argv[3]
+
+stock = Stock(sid, name)
 with open(file_name) as data_file:
     data = data_file.read()
     parsed_data = parse(data)
-    ratios = analyze(parsed_data)
-    pprint(parsed_data)
-    print("=====================")
-    pprint(ratios)
+
+    stock.set_data(parsed_data)
+    stock.analyze()
+
+    stock.save()
+    stock.print()

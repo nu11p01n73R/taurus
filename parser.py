@@ -27,7 +27,7 @@ def normalize(value):
 def normalize_year(value):
     year_re = r'Mar (\d\d)'
     match = re.search(year_re, value.strip(' '))
-    return 2000 + int(match.group(1)) if match else None
+    return str(2000 + int(match.group(1))) if match else None
 
 
 def extend(a_dict, first_key, second_key, value):
