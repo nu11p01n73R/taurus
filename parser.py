@@ -11,9 +11,13 @@ key_map = {
         'Total Shareholders Funds': 'total_equity',
         'Profit/Loss For The Period': 'total_profit',
         'Total Assets': 'total_assets',
+        'Fixed Assets': 'total_fixed_assets',
         'Long Term Borrowings': 'long_term_debt',
         'Short Term Borrowings': 'short_term_debt',
-        'Profit/Loss Before Tax': 'pbt'}
+        'Profit/Loss Before Tax': 'pbt',
+        'Total Current Assets': 'current_assets',
+        'Total Current Liabilities': 'current_liabilities',
+        'Trade Receivables': 'trade_receivables'}
 
 
 def normalize(value):

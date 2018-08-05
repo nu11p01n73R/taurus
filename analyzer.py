@@ -49,6 +49,30 @@ def get_debt_to_asset(data):
     return get_total_debt(data) / data['total_assets'] * 100
 
 
+def get_financial_leverage(data):
+    return data['total_assets'] / data['total_equity']
+
+
+def get_fixed_asset_turnover(data):
+    return get_operating_revenue(data) / data['total_fixed_assets']
+
+
+def get_working_capital(data):
+    return data['current_assets'] - data['current_liabilities']
+
+
+def get_working_capital_turnover(data):
+    return get_operating_revenue(data) / get_working_capital(data)
+
+
+def get_inventory_turnover(data):
+    pass
+
+
+def get_receivable_turnover(data):
+    return get_operating_revenue(data) / data['trade_receivables']
+
+
 def analyze_per_year(data):
     method_map = {
             'ebitda_margin': get_ebitda_margin,
@@ -58,7 +82,12 @@ def analyze_per_year(data):
             'roce': get_roce,
             'interest_coverage': get_interest_coverage,
             'debt_to_equity': get_debt_to_equity,
-            'debt_to_asset': get_debt_to_asset}
+            'debt_to_asset': get_debt_to_asset,
+            'financial_leverage': get_financial_leverage,
+            'fixed_asset_turnover': get_fixed_asset_turnover,
+            'working_capital': get_working_capital,
+            'working_capital_turnover': get_working_capital_turnover,
+            'receivable_turnover': get_receivable_turnover}
 
     output = {}
     for key, method in method_map.items():
