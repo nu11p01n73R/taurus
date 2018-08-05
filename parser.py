@@ -25,9 +25,9 @@ def normalize(value):
 
 
 def normalize_year(value):
-    year_re = r'Mar (\d\d)'
+    year_re = r'(?:Mar|Dec) \d\d'
     match = re.search(year_re, value.strip(' '))
-    return str(2000 + int(match.group(1))) if match else None
+    return value.strip(' ') if match else None
 
 
 def extend(a_dict, first_key, second_key, value):
@@ -45,7 +45,7 @@ def parse(data):
         search = pieces[0].strip(' ')
 
         if not search and not years:
-            years = [normalize_year(x) for x in pieces[1:]]
+            years = [y for y in (normalize_year(x) for x in pieces[1:]) if y]
 
         if search in key_map:
             key = key_map[search]
