@@ -1,5 +1,7 @@
-from flask import Flask, jsonify, abort
+from flask import Flask, jsonify, abort, request
 from stock import Stock
+from parser import parse
+from pprint import pprint
 
 
 app = Flask('taurus')
@@ -19,3 +21,21 @@ def get_stock(sid):
         return jsonify(stock.toJson())
     else:
         abort(404)
+
+
+@app.route('/stock', methods=['POST'])
+def put_stock():
+    name = request.form['stock_name']
+    sid = request.form['stock_id']
+
+    stock = Stock(sid, name)
+
+    data = request.form['data']
+    parsed_data = parse(data)
+    pprint(parsed_data)
+
+    stock.set_data(parsed_data)
+    stock.analyze()
+    stock.save()
+
+    return jsonify(stock.toJson())
