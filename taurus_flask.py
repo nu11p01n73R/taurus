@@ -13,6 +13,11 @@ def not_found(error):
     return jsonify(response)
 
 
+@app.route('/hello')
+def hello():
+    return 'Hello World'
+
+
 @app.route('/stock/<sid>')
 def get_stock(sid):
     stock = Stock.find(sid)
