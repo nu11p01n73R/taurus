@@ -24,7 +24,39 @@ List of ratios currently supported,
 
 
 # Installation
-TBA
+
+The dependecies for this project are managed using [`pipenv`]
+Clone the project and run,
+
+```
+pipenv install
+```
+
+The ratios calculated are saved in MongoDB.
+The connection parameters to MongoDB can be configured using
+the `config.ini` file or set as environment params,
+
+```
+MONGO_URL
+MONGO_DB
+```
 
 # Usage
-TBA
+
+The taurus can be run using a cli script, `taurus.py` or 
+using flask as web app.
+
+To run as cli, head over to Moneycontrol and get the financial
+data for the company(Balance Sheet and Profit and Loss). Paste
+the data in a file and run script with the file as params.
+
+```
+pipenv python taurus.py data_file
+```
+
+To run the web app, run the below commands.
+
+```
+export FLASK_APP=taurus_flask.py
+flask run
+```
