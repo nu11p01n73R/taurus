@@ -18,7 +18,13 @@ def hello():
     return 'Hello World'
 
 
-@app.route('/stock/<sid>')
+@app.route('/stocks')
+def get_all_stocks():
+    stocks = Stock.find_all()
+    return jsonify([stock.toJson() for stock in stocks])
+
+
+@app.route('/stocks/<sid>')
 def get_stock(sid):
     stock = Stock.find(sid)
 
@@ -28,8 +34,8 @@ def get_stock(sid):
         abort(404)
 
 
-@app.route('/stock', methods=['POST'])
-def put_stock():
+@app.route('/stocks', methods=['POST'])
+def create_stock():
     name = request.form['stock_name']
     sid = request.form['stock_id']
 

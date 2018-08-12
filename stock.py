@@ -27,7 +27,7 @@ class Stock:
         pprint(self.ratio)
 
     def toJson(self):
-        return self.__dict__
+        return {k: v for k, v in self.__dict__.items() if v}
 
     def save(self):
         data = self.__dict__
@@ -46,3 +46,9 @@ class Stock:
         stock.set_ratio(data['ratio'])
 
         return stock
+
+    @classmethod
+    def find_all(cls):
+        data = db[cls.db_name][cls.collection_name].find({})
+        for stock in data:
+            yield cls(stock['id'], stock['name'])
