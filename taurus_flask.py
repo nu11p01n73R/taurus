@@ -50,3 +50,9 @@ def create_stock():
     stock.save()
 
     return jsonify(stock.toJson())
+
+
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
