@@ -52,3 +52,21 @@ class Stock:
         data = db[cls.db_name][cls.collection_name].find({})
         for stock in data:
             yield cls(stock['id'], stock['name'])
+
+    @classmethod
+    def find_many(cls, ids):
+        if not ids:
+            return []
+
+        query = {'id': {'$in': ids}}
+
+        stocks = []
+        data = db[cls.db_name][cls.collection_name].find(query)
+        for stock_data in data:
+            stock = cls(stock_data['id'], stock_data['name'])
+            stock.set_data(stock_data['data'])
+            stock.set_ratio(stock_data['ratio'])
+
+            stocks.append(stock)
+
+        return stocks

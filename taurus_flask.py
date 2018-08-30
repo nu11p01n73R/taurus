@@ -20,7 +20,13 @@ def hello():
 
 @app.route('/stocks')
 def get_all_stocks():
-    stocks = Stock.find_all()
+    ids = request.args.get('id')
+
+    if ids:
+        stocks = Stock.find_many(ids.split(','))
+    else:
+        stocks = Stock.find_all()
+
     return jsonify([stock.toJson() for stock in stocks])
 
 
