@@ -1,3 +1,4 @@
+import os
 from flask import Flask, jsonify, abort, request
 from stock import Stock
 from parser import parse
@@ -44,6 +45,10 @@ def get_stock(sid):
 def create_stock():
     name = request.form['stock_name']
     sid = request.form['stock_id']
+    auth = request.form['auth']
+
+    if auth != os.environ['AUTH_TOKEN']:
+        abort(403)
 
     stock = Stock(sid, name)
 
